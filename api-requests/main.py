@@ -2,6 +2,17 @@ import requests
 import json
 import backoff
 import random
+import logging
+
+# Configuring logging
+log = logging.getLogger()
+log.setLevel(logging.DEBUG)
+formatter = logging.Formatter(
+    '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+ch = logging.StreamHandler()
+ch.setFormatter(formatter)
+log.addHandler(ch)
 
 # https://docs.awesomeapi.com.br/
 url = "https://economia.awesomeapi.com.br/json/last/USD-BRL"
@@ -64,19 +75,26 @@ for currency in currency_list:
 
 # Example to explain args and kwargs in Python functions + using backoff package to handle error and retries
 # max_time and max_tries
-@backoff.on_exception(backoff.expo, (ConnectionAbortedError, ConnectionRefusedError, TimeoutError), max_tries=2)
+@backoff.on_exception(backoff.expo, (ConnectionAbortedError, ConnectionRefusedError, TimeoutError), max_tries=10)
 def test_func(*args, **kargs):
     random_n = random.random()
-    print(f"""
-    RND: {random_n}
-              args: {args if args else 'no args'}
-                   kwargs: {kargs if kargs else 'no kwargs'}
-    """)
+    #print(f"""
+    #        RND: {random_n}
+    #        args: {args if args else 'no args'}
+    #        kwargs: {kargs if kargs else 'no kwargs'}
+    #""")
+    log.debug(f"RND: {random_n}")
+    log.info(f"args: {args if args else 'no args'}")
+    log.info(f"kwargs: {kargs if kargs else 'no kwargs'}")
+
     if random_n < .2:
+        log.error('Connection was finalized')
         raise ConnectionAbortedError('Connection was finalized')
     elif random_n < .4:
+        log.error('Connection was denied')
         raise ConnectionRefusedError('Connection was denied')
     elif random_n < .6:
+        log.error('Awaiting time exceed')
         raise TimeoutError('Awaiting time exceed')
     else:
         return "OK!"
