@@ -39,6 +39,8 @@ hash: 46454f45666441594232333230556a3768696c374e362b5a68574c35466e51776335553336
 imgbu file name: o00407-902800028XXXX -> o00407-9028000280101
 download link: https://resultados.tse.jus.br/oficial/ele2022/arquivo-urna/407/dados/mt/90280/0028/0101/46454f45666441594232333230556a3768696c374e362b5a68574c35466e5177633555333630796b4b38513d/o00407-9028000280101.imgbu
 
+https://resultados.tse.jus.br/oficial/ele2022/arquivo-urna/407/dados/mt/90280/{zona}/{secao}/{secao_hash}/o00407-90280{zona}{secao}.imgbu
+
 0102
 json link: https://resultados.tse.jus.br/oficial/ele2022/arquivo-urna/407/dados/mt/90280/0028/0102/p000407-mt-m90280-z0028-s0102-aux.json
 json: file:///Users/willianbarbosa/Downloads/p000407-mt-m90280-z0028-s0102-aux.json
@@ -55,3 +57,4 @@ https://urllib3.readthedocs.io/en/stable/
 P LER MEU ARQUIVO DE DOWNLOAD, VER SE EU PARSEIO ELE P CONSEGUIR LER LINHA A LINHA
 
 CONFRESA, MT, ZONA 0028 SECAO 0102
+
