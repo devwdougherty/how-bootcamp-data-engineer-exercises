@@ -1,18 +1,11 @@
-import json
-import os
 from abc import ABC, abstractmethod
 from typing import List
 
-import requests
 import logging
 import datetime
-import time
-import ratelimit
-
-from schedule import repeat, every, run_pending
-from backoff import on_exception, expo
 
 from apis import DaySummaryApi
+from writers import DataWriter
 
 # __name__ get the python file name or 'main'
 logger = logging.getLogger(__name__)
@@ -37,8 +30,8 @@ class DataIngestor(ABC):
         try:
             with open(self._checkpoint_filename, "r") as f:
                 return datetime.datetime.strptime(f.read(), "%Y-%m-%d").date()
-            except FileNotFoundError:
-                return None
+        except FileNotFoundError:
+            return None
 
     def _get_checkpoint(self):
         if not self._checkpoint:
