@@ -1,3 +1,5 @@
+import sys
+
 from selenium import webdriver
 
 from selenium.webdriver.chrome.options import Options
@@ -9,7 +11,10 @@ from selenium.webdriver.chrome.service import Service as ChromiumService
 from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.core.utils import ChromeType
 
+cep = sys.argv[1]
 
+if not cep:
+    sys.exit("invalid cep")
 
 # Chrome options to not automatically close the browser when achieve the end of script.
 chrome_options = Options()
@@ -27,7 +32,7 @@ driver.get('https://buscacepinter.correios.com.br/app/endereco/index.php')
 #cep_element = driver.find_element('xpath', '//*[@id="endereco"]')
 cep_element = driver.find_element('name', 'endereco')
 cep_element.clear()
-cep_element.send_keys('18117793')
+cep_element.send_keys(cep)
 
 cep_combo_box_element = driver.find_element('name', 'tipoCEP')
 # open combo cep_combo_box_element
@@ -35,17 +40,23 @@ cep_combo_box_element.click()
 driver.find_element('xpath', '//*[@id="tipoCEP"]/optgroup/option[1]').click()
 driver.find_element('id', 'btn_pesquisar').click()
 
-b = WebDriverWait(driver, 20).until(EC.element_to_be_clickable(('xpath', '//*[@id="resultado-DNEC"]/tbody/tr/td[1]')))
-
-print("oiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
-print(b.text)
+logradouro = (WebDriverWait(driver, 10).until(EC.element_to_be_clickable(('xpath', '//*[@id="resultado-DNEC"]/tbody/tr/td[1]')))).text
 
 #logradouro = driver.find_element('xpath', '//*[@id="resultado-DNEC"]/tbody/tr/td[1]').text
-#bairro = driver.find_element('xpath', '/html/body/main/form/div[1]/div[2]/div/div[4]/table/tbody/tr/td[2]').text
-#localidade = driver.find_element('xpath', '/html/body/main/form/div[1]/div[2]/div/div[4]/table/tbody/tr/td[3]').text
+bairro = driver.find_element('xpath', '/html/body/main/form/div[1]/div[2]/div/div[4]/table/tbody/tr/td[2]').text
+localidade = driver.find_element('xpath', '/html/body/main/form/div[1]/div[2]/div/div[4]/table/tbody/tr/td[3]').text
 
-#print(logradouro)
-#print(bairro)
-#print(localidade)
+driver.close()
 
-#driver.find_element('xpath', '/html/body/main/form/div[1]/div[2]/div/div[4]/table/tbody/tr/td[2]').text
+print(
+    """
+    For CEP {} we have:
+    Address: {}
+    Neighbourhood: {}
+    City: {}
+    """.format(
+    cep,
+    logradouro,
+    bairro,
+    localidade
+))
