@@ -40,6 +40,7 @@ cep_combo_box_element.click()
 driver.find_element('xpath', '//*[@id="tipoCEP"]/optgroup/option[1]').click()
 driver.find_element('id', 'btn_pesquisar').click()
 
+# One solution to make sure that our elements are fully loaded to be 'read'.
 logradouro = (WebDriverWait(driver, 10).until(EC.element_to_be_clickable(('xpath', '//*[@id="resultado-DNEC"]/tbody/tr/td[1]')))).text
 
 #logradouro = driver.find_element('xpath', '//*[@id="resultado-DNEC"]/tbody/tr/td[1]').text
