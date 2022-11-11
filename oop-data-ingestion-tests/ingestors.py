@@ -7,7 +7,6 @@ import datetime
 from apis import DaySummaryApi
 from writers import DataWriter
 
-# __name__ get the python file name or 'main'
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
@@ -20,18 +19,19 @@ class DataIngestor(ABC):
 
     @property
     def _checkpoint_filename(self) -> str:
+        # __name__ get the python class name or 'main'
         return f"{self.__class__.__name__}.checkpoint"
 
     def _write_checkpoint(self):
         with open(self._checkpoint_filename, "w") as f:
-            f .write(f"{self._checkpoint}")
+            f.write(f"{self._checkpoint}")
 
-    def _load_checkpoint(self) -> datetime:
+    def _load_checkpoint(self) -> datetime.date:
         try:
             with open(self._checkpoint_filename, "r") as f:
                 return datetime.datetime.strptime(f.read(), "%Y-%m-%d").date()
         except FileNotFoundError:
-            return None
+            return self.default_start_date
 
     def _get_checkpoint(self):
         if not self._checkpoint:
