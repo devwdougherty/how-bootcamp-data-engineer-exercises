@@ -1,5 +1,6 @@
 import datetime
 import pytest
+import requests
 
 from unittest.mock import patch
 
@@ -62,10 +63,43 @@ class TestTradesApi:
 '''
 Using @patch here because we're instantiating an abstract class (ABC). This way our instantiated
 abstract class will return a empty set() for us.
-'''
-@patch("apis.MercadoBitcoinApi.__abstractmethods__", set())
-class TestMercadoBitcoinApi:
 
+@fixture behaviors like @Setup for the tests. Usually is the last of function's parameters
+'''
+@pytest.fixture()
+@patch("apis.MercadoBitcoinApi.__abstractmethods__", set())
+def fixture_mercado_bitcoin_api():
+    return MercadoBitcoinApi(
+            coin='TEST'
+        )
+
+
+'''
+Overriding the requests.get() Response class and behaviors
+'''
+def mocked_requests_get(*args, **kwargs):
+    class MockResponse(requests.Response):
+        def __init__(self, json_data, status_code):
+            super().__init__()
+            self.status_code = status_code # Declaring this because we also want to mock the raise_for_status()
+            self.json_data = json_data
+
+        def json(self):
+            return self.json_data
+
+        def raise_for_status(self) -> None:
+            print("oiiiii")
+            print(self.status_code, self.json_data)
+            if self.status_code != 200:
+                raise Exception
+
+    if args[0] == "valid_endpoint":
+        return MockResponse(json_data={"foo": "bar"}, status_code=200)
+    else:   
+        return MockResponse(json_data=None, status_code=404)
+
+
+class TestMercadoBitcoinApi:
     '''
     As we don't want to test/call the real _get_endpoint, requests.get methods, we're using @patch here
     to mock the return of these methods.
@@ -74,9 +108,25 @@ class TestMercadoBitcoinApi:
     '''
     @patch("requests.get") 
     @patch("apis.MercadoBitcoinApi._get_endpoint", return_value="valid_endpoint")
-    def test_get_data_requests_is_called(self, mock_get_endpoint, mock_requests):
-        MercadoBitcoinApi(
-            coint='TEST'
-        ).get_data()
+    def test_get_data_requests_is_called(self, mock_get_endpoint, mock_requests, fixture_mercado_bitcoin_api):
+        fixture_mercado_bitcoin_api.get_data()
 
         mock_requests.assert_called_once_with("valid_endpoint")
+
+    '''
+    Here we're telling (side_effect) that when requests.get is called, we should return our Overriding class implemented
+    above, instead the real/mock requests.get
+    '''
+    @patch("requests.get", side_effect=mocked_requests_get)
+    @patch("apis.MercadoBitcoinApi._get_endpoint", return_value="valid_endpoint")
+    def test_get_data_with_valid_endpoint(self, mock_get_endpoint, mock_requests, fixture_mercado_bitcoin_api):
+        actual = fixture_mercado_bitcoin_api.get_data()
+        expected = {"foo": "bar"}
+        assert actual == expected
+
+
+    @patch("requests.get", side_effect=mocked_requests_get)
+    @patch("apis.MercadoBitcoinApi._get_endpoint", return_value="invalid_endpoint")
+    def test_get_data_with_invalid_endpoint(self, mock_get_endpoint, mock_requests, fixture_mercado_bitcoin_api):
+        with pytest.raises(Exception):
+            fixture_mercado_bitcoin_api.get_data()
