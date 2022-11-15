@@ -130,3 +130,6 @@ dmypy.json
 
 # IDE
 .idea/
+
+# JSON files coin quotes
+day-summary/

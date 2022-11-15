@@ -1,7 +1,9 @@
 import datetime
 import pytest
 
-from apis import DaySummaryApi, TradesApi
+from unittest.mock import patch
+
+from apis import DaySummaryApi, TradesApi, MercadoBitcoinApi
 
 class TestDaySummaryApi:
 
@@ -57,3 +59,24 @@ class TestTradesApi:
         actual = api.convert_date_to_unix(date)
         assert actual == expected
 
+'''
+Using @patch here because we're instantiating an abstract class (ABC). This way our instantiated
+abstract class will return a empty set() for us.
+'''
+@patch("apis.MercadoBitcoinApi.__abstractmethods__", set())
+class TestMercadoBitcoinApi:
+
+    '''
+    As we don't want to test/call the real _get_endpoint, requests.get methods, we're using @patch here
+    to mock the return of these methods.
+
+    Remember that we always need to send our mocks as function parameters.
+    '''
+    @patch("requests.get") 
+    @patch("apis.MercadoBitcoinApi._get_endpoint", return_value="valid_endpoint")
+    def test_get_data_requests_is_called(self, mock_get_endpoint, mock_requests):
+        MercadoBitcoinApi(
+            coint='TEST'
+        ).get_data()
+
+        mock_requests.assert_called_once_with("valid_endpoint")
