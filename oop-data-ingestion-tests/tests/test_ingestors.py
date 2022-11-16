@@ -1,7 +1,7 @@
 from unittest.mock import patch, mock_open
 
-from ingestors import DataIngestor
-from writers import DataWriter
+from mercado_bitcoin.ingestors import DataIngestor
+from mercado_bitcoin.writers import DataWriter
 
 import datetime
 import pytest
@@ -11,7 +11,7 @@ import pytest
 @fixture behaviors like @Setup for the tests. Usually is the last of function's parameters
 '''
 @pytest.fixture
-@patch("ingestors.DataIngestor.__abstractmethods__", set())
+@patch("mercado_bitcoin.ingestors.DataIngestor.__abstractmethods__", set())
 def data_ingestor_fixture():
     return DataIngestor(
             coins=['TEST', 'HOW'],
@@ -24,7 +24,7 @@ def data_ingestor_fixture():
 We're going to need @patch here because we're testing a method from an Abstract Class (ABC)
 and that class needs the @abstractmethod ingest to be implemented.
 '''
-@patch("ingestors.DataIngestor.__abstractmethods__", set())
+@patch("mercado_bitcoin.ingestors.DataIngestor.__abstractmethods__", set())
 class TestIngestors:
     def test_checkpoint_filename(self, data_ingestor_fixture):
         actual = data_ingestor_fixture._checkpoint_filename
@@ -54,7 +54,7 @@ class TestIngestors:
     Here we're going to use @patch because we don't want to use/activate
     the ._write_checkpoint() - avoiding the creation of .checkpoint file.
     '''
-    @patch("ingestors.DataIngestor._write_checkpoint", return_value=None)
+    @patch("mercado_bitcoin.ingestors.DataIngestor._write_checkpoint", return_value=None)
     def test_update_checkpoint_checkpoint_updated(self, mock, data_ingestor_fixture):
         data_ingestor = data_ingestor_fixture
         data_ingestor._update_checkpoint(value=datetime.date(2022, 1, 1))
@@ -63,7 +63,7 @@ class TestIngestors:
         assert actual == expected
     
 
-    @patch("ingestors.DataIngestor._write_checkpoint", return_value=None)
+    @patch("mercado_bitcoin.ingestors.DataIngestor._write_checkpoint", return_value=None)
     def test_update_checkpoint_checkpoint_written(self, mock, data_ingestor_fixture):
         data_ingestor = data_ingestor_fixture
         data_ingestor._update_checkpoint(value=datetime.date(2022, 1, 1))
@@ -75,7 +75,7 @@ class TestIngestors:
     The first @patch should be the last argument
     '''
     @patch("builtins.open", new_callable=mock_open, read_data="2022-10-16")
-    @patch("ingestors.DataIngestor._checkpoint_filename", return_value="foobar.checkpoint")
+    @patch("mercado_bitcoin.ingestors.DataIngestor._checkpoint_filename", return_value="foobar.checkpoint")
     def test_write_checkpoint(self, mock_checkpoint_file_name, mock_open_file, data_ingestor_fixture):
         data_ingestor = data_ingestor_fixture
         data_ingestor._write_checkpoint()

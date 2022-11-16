@@ -4,7 +4,7 @@ import requests
 
 from unittest.mock import patch
 
-from apis import DaySummaryApi, TradesApi, MercadoBitcoinApi
+from mercado_bitcoin.apis import DaySummaryApi, TradesApi, MercadoBitcoinApi
 
 class TestDaySummaryApi:
 
@@ -67,7 +67,7 @@ abstract class will return a empty set() for us.
 @fixture behaviors like @Setup for the tests. Usually is the last of function's parameters
 '''
 @pytest.fixture()
-@patch("apis.MercadoBitcoinApi.__abstractmethods__", set())
+@patch("mercado_bitcoin.apis.MercadoBitcoinApi.__abstractmethods__", set())
 def fixture_mercado_bitcoin_api():
     return MercadoBitcoinApi(
             coin='TEST'
@@ -88,8 +88,6 @@ def mocked_requests_get(*args, **kwargs):
             return self.json_data
 
         def raise_for_status(self) -> None:
-            print("oiiiii")
-            print(self.status_code, self.json_data)
             if self.status_code != 200:
                 raise Exception
 
@@ -107,7 +105,7 @@ class TestMercadoBitcoinApi:
     Remember that we always need to send our mocks as function parameters.
     '''
     @patch("requests.get") 
-    @patch("apis.MercadoBitcoinApi._get_endpoint", return_value="valid_endpoint")
+    @patch("mercado_bitcoin.apis.MercadoBitcoinApi._get_endpoint", return_value="valid_endpoint")
     def test_get_data_requests_is_called(self, mock_get_endpoint, mock_requests, fixture_mercado_bitcoin_api):
         fixture_mercado_bitcoin_api.get_data()
 
@@ -118,7 +116,7 @@ class TestMercadoBitcoinApi:
     above, instead the real/mock requests.get
     '''
     @patch("requests.get", side_effect=mocked_requests_get)
-    @patch("apis.MercadoBitcoinApi._get_endpoint", return_value="valid_endpoint")
+    @patch("mercado_bitcoin.apis.MercadoBitcoinApi._get_endpoint", return_value="valid_endpoint")
     def test_get_data_with_valid_endpoint(self, mock_get_endpoint, mock_requests, fixture_mercado_bitcoin_api):
         actual = fixture_mercado_bitcoin_api.get_data()
         expected = {"foo": "bar"}
@@ -126,7 +124,7 @@ class TestMercadoBitcoinApi:
 
 
     @patch("requests.get", side_effect=mocked_requests_get)
-    @patch("apis.MercadoBitcoinApi._get_endpoint", return_value="invalid_endpoint")
+    @patch("mercado_bitcoin.apis.MercadoBitcoinApi._get_endpoint", return_value="invalid_endpoint")
     def test_get_data_with_invalid_endpoint(self, mock_get_endpoint, mock_requests, fixture_mercado_bitcoin_api):
         with pytest.raises(Exception):
             fixture_mercado_bitcoin_api.get_data()
