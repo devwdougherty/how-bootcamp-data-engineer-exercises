@@ -133,3 +133,6 @@ dmypy.json
 
 # JSON files coin quotes
 day-summary/
+
+# Checkpoint file
+DaySummaryIngestor.checkpoint
