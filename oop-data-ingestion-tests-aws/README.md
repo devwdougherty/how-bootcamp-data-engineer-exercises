@@ -33,16 +33,42 @@ poetry add ratelimit
 poetry add backoff
 ```
 
+### Installing a 'dev' dependency in poetry
+```
+poetry add --dev black
+```
+
 Toml Python Env
 MacOS
 ```
 $ source .venv/bin/activate
 ```
 
+## Black - code formating
+```
+$ black .
+```
+
 # References
 
-## boto3
+## AWS
 
-### S3
+### Setup
+1. Create S3 bucket
+2. Check Dynamo Table doesn't exist
 
+### APIs
+
+#### S3
+
+##### To handle with S3 - boto
 https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3.html
+
+#### DynamoDB
+
+##### To handle with DynamoDB - pynamodb
+https://github.com/pynamodb/PynamoDB
+
+# TO DO
+
+[ ] build a container for this app

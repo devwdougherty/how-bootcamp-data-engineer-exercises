@@ -19,8 +19,9 @@ logging.basicConfig(level=logging.INFO)
 """
 ABC -> abstract base class
 """
-class MercadoBitcoinApi(ABC):
 
+
+class MercadoBitcoinApi(ABC):
     def __init__(self, coin: str) -> None:
         self.coin = coin
         self.base_endpoint = "https://www.mercadobitcoin.net/api"
@@ -31,10 +32,12 @@ class MercadoBitcoinApi(ABC):
     Abstract method should now be implemented to be used (open-close principle)
     **kwargs -> Making the signature of this method available and open for N of arguments of key-value.
     """
+
     @abstractmethod
     def _get_endpoint(self, **kwargs) -> str:
         pass
-    #return f"{self.base_endpoint}/{self.coin}/day-summary/2022/10/31"
+
+    # return f"{self.base_endpoint}/{self.coin}/day-summary/2022/10/31"
 
     @on_exception(expo, ratelimit.exception.RateLimitException, max_tries=10)
     @ratelimit.limits(calls=29, period=30)
@@ -51,6 +54,7 @@ class BtcApi(MercadoBitcoinApi):
     def _get_endpoint(self) -> str:
         return "a"
 
+
 class DaySummaryApi(MercadoBitcoinApi):
 
     type = "day-summary"
@@ -65,15 +69,17 @@ class TradesApi(MercadoBitcoinApi):
     def convert_date_to_unix(self, date: datetime) -> int:
         return int(date.timestamp())
 
-    def _get_endpoint(self, date_from: datetime.datetime = None, date_to: datetime.datetime = None) -> str:
-        
+    def _get_endpoint(
+        self, date_from: datetime.datetime = None, date_to: datetime.datetime = None
+    ) -> str:
+
         if date_from and not date_to:
             unix_date_from = self.convert_date_to_unix(date_from)
             endpoint = f"{self.base_endpoint}/{self.coin}/{self.type}/{unix_date_from}"
         elif date_from and date_to:
 
             if date_from > date_to:
-                raise RuntimeError('date_from cannot be greater than date_to')
+                raise RuntimeError("date_from cannot be greater than date_to")
 
             unix_date_from = self.convert_date_to_unix(date_from)
             unix_date_to = self.convert_date_to_unix(date_to)
