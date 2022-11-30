@@ -13,7 +13,7 @@ from schedule import repeat, every, run_pending
 from backoff import on_exception, expo
 
 from ingestors import DaySummaryIngestor
-from writers import DataWriter
+from writers import DataWriter, S3Writter
 
 # __name__ get the python file name or 'main'
 logger = logging.getLogger(__name__)
@@ -21,7 +21,8 @@ logging.basicConfig(level=logging.INFO)
 
 if __name__ == "__main__":
     day_summary_ingestor = DaySummaryIngestor(
-        writer=DataWriter,
+        #writer=DataWriter,
+        writer=S3Writter,
         coins=["BTC", "ETH", "LTC"],
         default_start_date=datetime.date(2022, 9, 1)
     )

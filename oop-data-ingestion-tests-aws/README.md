@@ -33,3 +33,16 @@ poetry add ratelimit
 poetry add backoff
 ```
 
+Toml Python Env
+MacOS
+```
+$ source .venv/bin/activate
+```
+
+# References
+
+## boto3
+
+### S3
+
+https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3.html
