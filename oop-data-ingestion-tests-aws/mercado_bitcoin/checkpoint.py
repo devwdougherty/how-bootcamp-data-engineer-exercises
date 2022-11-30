@@ -20,8 +20,8 @@ class CheckpointModel(Model):
         # credentials from env file not working here...
         # aws_access_key_id = str(getenv('AWS_ID')),
         # aws_secret_access_key = str(getenv('AWS_KEY'))
-        aws_access_key_id = "AKIATUFPHB3EV3EBFMTE"
-        aws_secret_access_key = "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"
+        aws_access_key_id = ""
+        aws_secret_access_key = ""
         table_name = "mercado_bitcoin_ingestor_checkpoints"
         region = "us-east-1"
 
