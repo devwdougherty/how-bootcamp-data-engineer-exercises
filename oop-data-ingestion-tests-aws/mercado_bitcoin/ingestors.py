@@ -4,10 +4,10 @@ from typing import List
 import logging
 import datetime
 
-from checkpoint import DynamoCheckpoints, CheckpointModel
+from mercado_bitcoin.checkpoint import DynamoCheckpoints, CheckpointModel
 
-from apis import DaySummaryApi
-from writers import DataWriter
+from mercado_bitcoin.apis import DaySummaryApi
+from mercado_bitcoin.writers import DataWriter
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)

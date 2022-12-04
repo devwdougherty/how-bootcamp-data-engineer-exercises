@@ -12,8 +12,8 @@ import ratelimit
 from schedule import repeat, every, run_pending
 from backoff import on_exception, expo
 
-from ingestors import DaySummaryIngestor, AWSDaySummaryIngestor
-from writers import DataWriter, S3Writter
+from mercado_bitcoin.ingestors import DaySummaryIngestor, AWSDaySummaryIngestor
+from mercado_bitcoin.writers import DataWriter, S3Writter
 
 # __name__ get the python file name or 'main'
 logger = logging.getLogger(__name__)
