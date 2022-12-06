@@ -7,12 +7,11 @@ on:
       - develop
 
 jobs:
-  build-oop-exercise:
+  build-oop-exercise-test:
+    runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: oop-data-ingestion-tests-aws-github-actions
-    test:
-      runs-on: ubuntu-latest
+        working-directory: oop-data-ingestion-tests-aws-github-actions    
 
     steps:
       - uses: actions/checkout@v3
