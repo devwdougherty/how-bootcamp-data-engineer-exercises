@@ -1,0 +1,23 @@
+{
+    "dev": {
+        "app_function": "mercado_bitcoin.lambda_function",
+        "lambda_handler": "mercado_bitcoin.lambda_function.lambda_handler",
+        "aws_region": "us-east-1",
+        "profile_name": "default",
+        "project_name": "oop-data-ingest",
+        "runtime": "python3.9",
+        "s3_bucket": "zappa-4jydpv22f",
+        "manage_roles": false,
+        "role_name": "oop-data-ingest-dev-ZappaLambdaExecutionRole",
+        "role_arn": "arn:aws:iam::249475567305:role/oop-data-ingest-dev-ZappaLambdaExecutionRole",
+        "events": [
+            {   
+                "function": "mercado_bitcoin.lambda_function",
+                "expression": "rate(1 minute)"
+            }
+        ],
+        "memory_size": 128,
+        "cloudwatch_log_level": "INFO",
+        "keep_warm": false
+    }
+}

@@ -12,6 +12,10 @@ To run with local code coverage (pytest-cov package)
 
 ```bash
 $ python -m pytest --cov=mercado_bitcoin tests/
+
+OR
+
+$ poetry run python -m pytest
 ``` 
 
 ## Test
