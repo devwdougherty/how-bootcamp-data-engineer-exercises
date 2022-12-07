@@ -78,6 +78,6 @@ class DynamoCheckpoints:
             self.model.create_table(billing_mode="PAY_PER_REQUEST", wait=True)
 
 
-DynamoCheckpoints(
-    model=CheckpointModel, report_id="abc", default_start_date=datetime.date(2022, 9, 1)
-)
+#DynamoCheckpoints(
+#    model=CheckpointModel, report_id="abc", default_start_date=datetime.date(2022, 9, 1)
+#)
