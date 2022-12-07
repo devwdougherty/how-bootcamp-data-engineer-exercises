@@ -30,7 +30,7 @@
         "events": [
             {   
                 "function": "mercado_bitcoin.lambda_function",
-                "expression": "rate(60 minute)"
+                "expression": "rate(60 minutes)"
             }
         ]
     }
