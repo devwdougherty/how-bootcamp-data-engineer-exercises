@@ -135,6 +135,8 @@ Checkout action used: https://github.com/actions/checkout
 To configure first time your AWS credentials and profile:
 ```bash
 aws config
+aws configure get aws_access_key_id
+aws configure get aws_secret_access_key
 ```
 
 Create a Lambda function using an existing policy and code in a bucket:
