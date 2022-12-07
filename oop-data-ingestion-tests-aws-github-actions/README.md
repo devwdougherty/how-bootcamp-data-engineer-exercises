@@ -113,6 +113,14 @@ $ zappa undeploy dev
 
 We're going to config a schedule to run our lambda function every 1 minute (see zappa github docs).
 
+### Github Actions
+
+Source: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
+Checkout action used: https://github.com/actions/checkout
+
+
+
+
 # AWS Architecture
 
 ![oop-data-ingestion-tests-aws.png](oop-data-ingestion-tests-aws.png)

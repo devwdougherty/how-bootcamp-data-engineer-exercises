@@ -1,1 +1,29 @@
+name: Run Tests on Feature Branch
 
+on:
+  push:
+    branches-ignore:
+      - main
+      - develop
+
+jobs:
+  build-oop-exercise-test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: oop-data-ingestion-tests  
+
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Python
+        uses: actions/setup-Python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: make ci-setup
+
+      - name: Run Tests
+        run: make ci-test
+        
