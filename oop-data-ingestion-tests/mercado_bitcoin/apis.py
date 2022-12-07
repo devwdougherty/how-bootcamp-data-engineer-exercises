@@ -63,7 +63,8 @@ class TradesApi(MercadoBitcoinApi):
     type = "trades"
 
     def convert_date_to_unix(self, date: datetime) -> int:
-        return int(date.timestamp())
+        #return int(date.timestamp())
+        return int((date - datetime.datetime(1970, 1, 1)).total_seconds())  # Fixing to not get the default timezone of my region, but the original timestamp.
 
     def _get_endpoint(self, date_from: datetime.datetime = None, date_to: datetime.datetime = None) -> str:
         
