@@ -31,7 +31,7 @@ jobs:
     needs: build-oop-exercise-test
     defaults:
       run:
-        working-directory: oop-data-ingestion-tests-github-actions 
+        working-directory: oop-data-ingestion-tests-aws-github-actions
 
     steps:
       - uses: actions/checkout@v3
