@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: oop-data-ingestion-tests  
+        working-directory: oop-data-ingestion-tests-aws-github-actions
 
     steps:
       - uses: actions/checkout@v3
