@@ -113,6 +113,14 @@ $ zappa undeploy dev
 
 We're going to config a schedule to run our lambda function every 1 minute (see zappa github docs).
 
+### Github Actions
+
+Source: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
+Checkout action used: https://github.com/actions/checkout
+
+
+
+
 # AWS Architecture
 
 ![oop-data-ingestion-tests-aws.png](oop-data-ingestion-tests-aws.png)
@@ -127,6 +135,8 @@ We're going to config a schedule to run our lambda function every 1 minute (see 
 To configure first time your AWS credentials and profile:
 ```bash
 aws config
+aws configure get aws_access_key_id
+aws configure get aws_secret_access_key
 ```
 
 Create a Lambda function using an existing policy and code in a bucket:

@@ -20,8 +20,6 @@ class CheckpointModel(Model):
         # credentials from env file not working here...
         # aws_access_key_id = str(getenv('AWS_ID')),
         # aws_secret_access_key = str(getenv('AWS_KEY'))
-        aws_access_key_id = ""
-        aws_secret_access_key = ""
         table_name = "mercado_bitcoin_ingestor_checkpoints"
         region = "us-east-1"
 
@@ -80,6 +78,6 @@ class DynamoCheckpoints:
             self.model.create_table(billing_mode="PAY_PER_REQUEST", wait=True)
 
 
-DynamoCheckpoints(
-    model=CheckpointModel, report_id="abc", default_start_date=datetime.date(2022, 9, 1)
-)
+#DynamoCheckpoints(
+#    model=CheckpointModel, report_id="abc", default_start_date=datetime.date(2022, 9, 1)
+#)

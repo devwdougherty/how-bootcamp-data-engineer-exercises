@@ -27,10 +27,10 @@ class TestTradesApi:
     @pytest.mark.parametrize(
         'coin, date_from, date_to, expected',
         [
-            ('TEST', datetime.datetime(2022, 10, 28), datetime.datetime(2022, 10, 29), 'https://www.mercadobitcoin.net/api/TEST/trades/1666926000/1667012400'),
+            ('TEST', datetime.datetime(2022, 10, 28), datetime.datetime(2022, 10, 29), 'https://www.mercadobitcoin.net/api/TEST/trades/1666915200/1667001600'),
             ('TEST', None, None, 'https://www.mercadobitcoin.net/api/TEST/trades'),
             ('TEST', None, datetime.datetime(2020, 11, 17, 0, 0, 1), 'https://www.mercadobitcoin.net/api/TEST/trades'),
-            ('TEST', datetime.datetime(2020, 1, 1), None, 'https://www.mercadobitcoin.net/api/TEST/trades/1577847600'),
+            ('TEST', datetime.datetime(2020, 1, 1), None, 'https://www.mercadobitcoin.net/api/TEST/trades/1577836800'),
         ]
     )
     def test_get_endpoint(self, coin, date_from, date_to, expected):
@@ -48,11 +48,11 @@ class TestTradesApi:
     @pytest.mark.parametrize(
         'date, expected',
         [
-            (datetime.datetime(2022, 10, 28), 1666926000),
-            (datetime.datetime(2022, 10, 29), 1667012400),
-            (datetime.datetime(2020, 1, 1), 1577847600),
-            (datetime.datetime(2020, 1, 1, 0, 0, 5), 1577847605),
-            (datetime.datetime(2021, 11, 17, 0, 0, 1), 1637118001),
+            (datetime.datetime(2022, 10, 28), 1666915200),
+            (datetime.datetime(2022, 10, 29), 1667001600),
+            (datetime.datetime(2020, 1, 1), 1577836800),
+            (datetime.datetime(2020, 1, 1, 0, 0, 5), 1577836805),
+            (datetime.datetime(2021, 11, 17, 0, 0, 1), 1637107201),
         ]
     )
     def test_convert_date_to_unix(self, date, expected):
