@@ -12,4 +12,10 @@ Python package that generates fake data.
 
 ## AWS Architecture
 
+### Notes
+
+1. Added an INBOUND/OUTBOUND rule to allow my local IP to insert into RDS Postgree.
+
+### Architecture
+
 [diagram]
