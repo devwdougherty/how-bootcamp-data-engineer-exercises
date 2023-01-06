@@ -1,11 +1,13 @@
 import psycopg2
-import os
 import time
 
+from dotenv import load_dotenv
+from os import getenv
 from datetime import datetime
 from faker import Faker
 
 faker_instance = Faker(['en_US'])
+load_dotenv('.env')
 
 def get_data():
     lat, lng, region, country, timezone = faker_instance.location_on_land()
@@ -28,11 +30,11 @@ dsn = (
     "password={password} "
     "port={port} "
     "host={host} ".format(
-        dbname="pedidos",
-        user=os.environ["USER"],
-        password=os.environ["PASSWORD"],
+        dbname="orders",
+        user=getenv("USER"),
+        password=getenv("PASSWORD"),
         port=5432,
-        host=os.environ["HOST"],
+        host=getenv("HOST"),
     )
 )
 
@@ -44,7 +46,7 @@ cur.execute(
     """
     create table if not exists customers(
         created_at timestamp,
-        updated_at tiemstamp,
+        updated_at timestamp,
         customer_id uuid PRIMARY KEY,
         name varchar(200),
         region varchar(200),
